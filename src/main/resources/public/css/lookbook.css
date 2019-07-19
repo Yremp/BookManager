@@ -1,0 +1,52 @@
+.book{
+    background: #0b2e13;
+    color: rgba(0,0,0,.5);
+    position: relative;
+    margin: 0 auto;
+    top: 100px;
+    height: auto;
+    width: 900px;
+    background-color: rgba(255, 255, 255, 0);
+    box-shadow: 0 1px 20px -8px rgba(0, 0, 0, .5);
+}
+.bookoption{
+    float: left;
+
+}
+.bookoption img{
+    border-radius: 5px;
+    width: 290px;
+    height: 400px;
+}
+.bookinfo{
+    margin-left: 300px;
+    position: absolute;
+}
+
+.btnbox{
+    position: absolute;
+    right: 0px;
+    bottom: 20px;
+}
+
+.btn2{
+    position: fixed;
+    right:40px;
+    width: 40px;
+    bottom: 20px;
+    margin-top: 0px;
+    margin-left: 30px;
+    margin-right: 20px;
+    padding: 1em 1.5em 1em 1.5em;
+    display: inline-block;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid#6190e8;
+    border-radius: 5px;
+    background-color:#6190e8;
+    color: #fff;
+    outline: none;
+    font-size: 0.75em;
+}

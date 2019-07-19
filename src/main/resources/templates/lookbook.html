@@ -1,0 +1,153 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>书籍查看</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet"   >
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .table thead th {
+            width: 20%;
+            height: 40px;
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../public/css/mainui.css" th:href="@{/css/mainui.css}" rel="stylesheet">
+
+    <link href="../public/css/booklist.css" th:href="@{/css/booklist.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" th:fragment="topbar">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" th:text="你好+','+${session.user.getName()}">
+    </a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/logout">Sign out</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="/background.html">
+                            <span data-feather="home"></span>
+                        </a>
+                        <a class="nav-link" href="/user" shiro:hasPermission="admin">
+                            <span data-feather="shopping-cart"></span>
+                            用户列表
+                        </a>
+                    </li>
+                    <li class="nav-item" shiro:hasPermission="admin">
+                        <a class="nav-link" href="#" th:href="@{/user/lookusers/}">
+                            <span data-feather="layers"></span>
+                            用户管理
+                        </a>
+                    </li>
+                    <li class="nav-item" shiro:hasPermission="admin">
+                        <a class="nav-link" href="/lookbook">
+                            <span data-feather="bar-chart-2"></span>
+                            书籍列表
+                        </a>
+                    </li>
+
+                    <li class="nav-item" shiro:hasPermission="admin">
+                        <a class="nav-link"
+                           href="/book">
+                            <span data-feather="users"></span>
+                            书籍管理
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{'/userinfo/predit/'+${session.user.getId()}}" shiro:Authenticated="true">
+                            <span data-feather="shopping-cart"></span>
+                            个人信息
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{'/userinfo/rend/'+${session.user.getId()}}" shiro:Authenticated="true">
+                            <span data-feather="shopping-cart"></span>
+                            我的书架
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/index.html}">
+                            <span data-feather="file"></span>
+                            返回主页
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">书籍查看</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar"></span>
+                        This week
+                    </button>
+                </div>
+            </div>
+            <div th:unless="${#lists.isEmpty(books)}" class="allbook" >
+                <div th:each="book:${books}" class="book" id="book">
+                    <div class="bookoption">
+                        <img th:src="${book.image}" >
+                    </div>
+
+                    <div class="bookinfo">
+                        书名：<span th:text="${book.name}"></span><br>
+                        作者：<span th:text="${book.author}"></span><br>
+                        价格：<span th:text="${book.price}">元</span><br>
+                        简介：<span th:text="${book.description}"></span><br>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0/js/dashboard.js}"></script></body>
+</html>

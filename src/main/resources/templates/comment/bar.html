@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../public/css/mainui.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}"rel="stylesheet">
+    <style>
+        li:hover{
+            background: rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<!--comment topbar-->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" th:fragment="topbar">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" th:text="你好+','+${session.user.getName()}">
+    </a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/logout">Sign out</a>
+        </li>
+    </ul>
+</nav>
+<!--comment sidebar-->
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active"
+                   href="/background.html">
+                    <span data-feather="home"></span>
+                </a>
+                <a class="nav-link" href="/user" shiro:hasPermission="admin">
+                    <span data-feather="shopping-cart"></span>
+                    用户列表
+                </a>
+            </li>
+            <li class="nav-item" shiro:hasPermission="admin">
+                <a class="nav-link" href="#" th:href="@{/user/lookusers/}">
+                    <span data-feather="layers"></span>
+                    用户管理
+                </a>
+            </li>
+            <li class="nav-item" shiro:hasPermission="admin">
+                <a class="nav-link" href="/lookbook">
+                    <span data-feather="bar-chart-2"></span>
+                    书籍列表
+                </a>
+            </li>
+
+            <li class="nav-item" shiro:hasPermission="admin">
+                <a class="nav-link"
+                   href="/book">
+                    <span data-feather="users"></span>
+                    书籍管理
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{'/userinfo/predit/'+${session.user.getId()}}" shiro:Authenticated="true">
+                    <span data-feather="shopping-cart"></span>
+                    个人信息
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{'/userinfo/rend/'+${session.user.getId()}}" shiro:Authenticated="true">
+                    <span data-feather="shopping-cart"></span>
+                    我的书架
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/index.html}">
+                    <span data-feather="file"></span>
+                    返回主页
+                </a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+</body>
+</html>

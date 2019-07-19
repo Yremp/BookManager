@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html lang="en" html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>home</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../public/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet"   >
+
+
+    <style>
+        .navbar{
+            height: 40px;
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .navbar-toggler {
+            position: absolute;
+            right: 5px;
+        }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        .myblog{
+            color: white;
+        }
+        .myblog a{
+            color: #005cbf;
+        }
+        .card-body {
+            height: 360px;
+        }
+        .btn-mybtn1{
+            position: absolute;
+            bottom: 5px;
+            left: 60px;
+        }
+        .btn-mybtn2{
+            position: absolute;
+            bottom: 5px;
+            right:60px;
+        }
+        .container{
+            text-align: center;
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">图书管理系统采用spring boot框架开发，整合了Mybatis、Thymeleaf、以及shiro</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">导航</h4>
+                    <ul class="list-unstyled">
+                        <li shiro:Authenticated="true"><a href="/background" class="text-white" >用户中心</a></li>
+                        <li shiro:notAuthenticated="" authenticated><a href="/login.html" class="text-white" />登录</a></li>
+                        <li shiro:notAuthenticated="" authenticated><a href="/signup.html" class="text-white" />注册</a></li>
+                        <li shiro:Authenticated="true" authenticated><a href="/logout" class="text-white" />退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Spring Boot之图书管理系统</h1>
+            <p class="lead text-muted">使用Spring Boot整合Mybatis、Thymeleaf、Shiro开发的图书管理系统</p>
+            <p>
+                <a href="https://github.com/yremp/book"  target="_blank" class="btn btn-primary my-2">项目地址</a>
+                <a href="https://yremp.live" target="_blank" class="btn btn-secondary my-2">博客地址</a>
+            </p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-4" th:each="book:${books}">
+                    <div class="card mb-4 shadow-sm">
+<!--                        <svg  class="bd-placeholder-img card-img-top" style="background-image:url('${book.image}')" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><text x="50%" y="50%" fill="#eceeef" dy=".3em">[[${book.name}]]</text></svg>-->
+                        <img th:src="${book.image}" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                        <div class="card-body">
+                            <p class="card-text" th:text="${book.description}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                            <a class="btn-mybtn1"><button type="button" class="btn btn-sm btn-primary">查看详情</button></a>
+                            <a class="btn-mybtn2" th:href="${session.user==null}?'/login.html':'/rend/'+${book.getId()}+'/'+${session.user.getId()}"><button type="button" class="btn btn-sm btn-primary" >放到书架</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>页面由<a href="https://getbootstrap.com/">BootStrap</a>提供模板</p>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="../public/js/bootstrap.bundle.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.bundle.js}"  ></script></body>
+</html>
